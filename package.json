@@ -16,6 +16,7 @@
   "author": "Sabri0o",
   "license": "ISC",
   "dependencies": {
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "react-redux": "^7.2.4"
   }
 }
