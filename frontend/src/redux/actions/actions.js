@@ -1,28 +1,29 @@
 import register from "../../services/registerService";
-
-const registerOnSuccess = () => {
+import { REGISTER_SUCCESS, REGISTER_FAIL } from "./types";
+const registerOnSuccess = (data) => {
   return {
-    type: "REGISTER_SUCCESS",
+    type: REGISTER_SUCCESS,
+    payload: data,
   };
 };
 
-const registerOnFail = () => {
+const registerOnFail = (error) => {
   return {
-    type: "REGISTER_FAIL",
+    type: REGISTER_FAIL,
+    payload: error,
   };
 };
 
-const registerAsyncAction = (email,password) => {
+const registerAsyncAction = (email, password) => {
   return async (dispatch) => {
     try {
-      let newUser = await register(email,password);
-      console.log(newUser)
-      dispatch(registerOnSuccess());
+      let newUser = await register(email, password);
+      dispatch(registerOnSuccess(newUser));
     } catch (e) {
-      console.log(e.message);
-      dispatch(registerOnFail());
+      console.log(e.message)
+      dispatch(registerOnFail(e.message));
     }
   };
 };
 
-export  { registerOnFail, registerOnSuccess, registerAsyncAction };
+export { registerOnFail, registerOnSuccess, registerAsyncAction };

@@ -16,28 +16,27 @@ export default function Signup() {
     setPassword(e.target.value);
   };
 
-  const handleOnClick = (email, password) => {
-    console.log("email:", email);
-    console.log("password:", password);
-    dispatch(registerAsyncAction(email, password))
-      .then((data) => console.log("welcome", data))
-      .catch((err) => console.log(err.message));
+  const handleOnSubmit = (e, email, password) => {
+    e.preventDefault();
+    dispatch(registerAsyncAction(email, password));
   };
 
-  const signUpDone = useSelector((state) => state.signUpDone);
+  const { registrationStatus, registrationMessage } = useSelector(
+    (state) => state
+  );
   const dispatch = useDispatch();
-  console.log("signUpDone:", signUpDone);
 
-  return (
+  return registrationStatus === false ? (
     <div>
-      SignUp
-      <Form>
+      <h3>SignUp form</h3>
+      <Form onSubmit={(e) => handleOnSubmit(e, email, password)}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
             onChange={handleEmailOnChange}
             type="email"
             placeholder="Enter email"
+            required
           />
         </Form.Group>
 
@@ -47,15 +46,16 @@ export default function Signup() {
             onChange={handlePasswordOnChange}
             type="password"
             placeholder="Password"
+            required
           />
         </Form.Group>
-        <Button
-          onClick={() => handleOnClick(email, password)}
-          variant="primary"
-        >
-          Submit
+        <Button type="submit" variant="primary">
+          Register
         </Button>
       </Form>
+      {!registrationStatus && <div>{registrationMessage}</div>}
     </div>
+  ) : (
+    <div>{registrationMessage}</div>
   );
 }
