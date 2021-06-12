@@ -1,13 +1,12 @@
-import $ from jQuery
-const API_URL = "http://localhost:3000/api/signup";
+import $ from "jquery";
+const API_URL = "http://localhost:3001/api/signUp";
 
-const register = (email,password) =>{
-    let data = {
-        email:email,
-        password:password
-    }
-    return $.post(API_URL,data)
-    
-}
+const register = (email, password) => {
+  let data = {
+    email: email,
+    password: password,
+  };
+  return $.post(API_URL, data);
+};
 
-module.export.register = register
+export default register;

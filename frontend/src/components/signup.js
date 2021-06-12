@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { registerAsyncAction } from "../redux/actions/actions";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -15,8 +16,18 @@ export default function Signup() {
     setPassword(e.target.value);
   };
 
+  const handleOnClick = (email, password) => {
+    console.log("email:", email);
+    console.log("password:", password);
+    dispatch(registerAsyncAction(email, password))
+      .then((data) => console.log("welcome", data))
+      .catch((err) => console.log(err.message));
+  };
+
   const signUpDone = useSelector((state) => state.signUpDone);
+  const dispatch = useDispatch();
   console.log("signUpDone:", signUpDone);
+
   return (
     <div>
       SignUp
@@ -38,7 +49,10 @@ export default function Signup() {
             placeholder="Password"
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button
+          onClick={() => handleOnClick(email, password)}
+          variant="primary"
+        >
           Submit
         </Button>
       </Form>

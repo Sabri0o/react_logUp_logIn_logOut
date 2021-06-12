@@ -12,10 +12,11 @@ const registerOnFail = () => {
   };
 };
 
-const registerAsyncAction = (dispatch) => {
-  return async () => {
+const registerAsyncAction = (email,password) => {
+  return async (dispatch) => {
     try {
-      await register;
+      let newUser = await register(email,password);
+      console.log(newUser)
       dispatch(registerOnSuccess());
     } catch (e) {
       console.log(e.message);
@@ -24,4 +25,4 @@ const registerAsyncAction = (dispatch) => {
   };
 };
 
-module.exports = { registerOnFail, registerOnSuccess, registerAsyncAction };
+export  { registerOnFail, registerOnSuccess, registerAsyncAction };
