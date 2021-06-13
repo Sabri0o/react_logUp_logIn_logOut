@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { registerAsyncAction } from "../redux/actions/actions";
+import { signupAsyncAction } from "../redux/actions/signup_action";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Signup() {
 
   const handleOnSubmit = (e, email, password) => {
     e.preventDefault();
-    dispatch(registerAsyncAction(email, password));
+    dispatch(signupAsyncAction(email, password));
   };
 
   const { registrationStatus, registrationMessage } = useSelector(

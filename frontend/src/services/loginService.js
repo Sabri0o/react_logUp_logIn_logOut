@@ -1,7 +1,7 @@
 import $ from "jquery";
-const API_URL = "http://localhost:3001/api/signUp";
+const API_URL = "http://localhost:3001/api/signIn";
 
-const register = (email, password) => {
+const login = (email, password) => {
   let data = {
     email: email,
     password: password,
@@ -9,4 +9,4 @@ const register = (email, password) => {
   return $.post(API_URL, data);
 };
 
-export default register;
+export default login;

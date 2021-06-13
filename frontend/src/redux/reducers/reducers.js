@@ -1,11 +1,11 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL } from "../actions/types";
+import { REGISTER_SUCCESS, REGISTER_FAIL } from "../types/types";
 
 const defaultState = {
   registrationStatus: false,
   registrationMessage: "",
 };
 
-const registerReducer = (state = defaultState, action) => {
+const signupReducer = (state = defaultState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
       return {
@@ -20,4 +20,4 @@ const registerReducer = (state = defaultState, action) => {
   }
 };
 
-export default registerReducer;
+export default signupReducer;
