@@ -7,6 +7,7 @@ import { signupAsyncAction } from "../redux/actions/signup_action";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const handleEmailOnChange = (e) => {
     setEmail(e.target.value);
@@ -17,8 +18,9 @@ export default function Signup() {
   };
 
   const handleOnSubmit = (e, email, password) => {
+    setLoading(true)
     e.preventDefault();
-    dispatch(signupAsyncAction(email, password));
+    dispatch(signupAsyncAction(email, password)).then(()=>setLoading(false))
   };
 
   const { registrationStatus, registrationMessage } = useSelector(
@@ -49,8 +51,11 @@ export default function Signup() {
             required
           />
         </Form.Group>
-        <Button type="submit" variant="primary">
-          Register
+        <Button type="submit" variant="primary" disabled={loading}>
+        {loading && (
+            <span className="spinner-border spinner-border-sm"></span>
+          )}
+          <span>Register</span>
         </Button>
       </Form>
       {!registrationStatus && <div>{registrationMessage}</div>}
