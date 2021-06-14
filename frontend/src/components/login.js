@@ -1,16 +1,18 @@
 import React from "react";
+import { Redirect } from "react-router";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginAsyncAction } from "../redux/actions/login_action";
 
+
 export default function Login() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { loginStatus, loginMessage } = useSelector((state) => state);
-  console.log(loginStatus, loginMessage);
   const dispatch = useDispatch();
 
   const handleEmailOnChange = (e) => {
@@ -24,8 +26,15 @@ export default function Login() {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(loginAsyncAction(email, password)).then(() => setLoading(false));
+    dispatch(loginAsyncAction(email, password)).then(() => {
+      setLoading(false);
+    });
   };
+
+  console.log(loginStatus, loginMessage);
+  if (loginStatus) {
+    return <Redirect to="/profile" />;
+  }
 
   return (
     <div>
