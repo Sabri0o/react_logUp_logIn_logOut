@@ -1,12 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router";
 import { Form, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginAsyncAction } from "../redux/actions/login_action";
 
-
 export default function Login() {
+  const _isMounted = useRef(true); 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,12 +23,20 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  useEffect(() => {
+    return () => {
+      _isMounted.current = false;
+    };
+  }, []);
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(loginAsyncAction(email, password)).then(() => {
-      setLoading(false);
-    });
+    if (_isMounted.current) {
+      dispatch(loginAsyncAction(email, password)).then(() => {
+        setLoading(false);
+      });
+    }
   };
 
   console.log(loginStatus, loginMessage);
