@@ -1,5 +1,5 @@
 import login from "../../services/loginService";
-import {LOGIN_FAIL,LOGIN_SUCCESS} from "../types/types"
+import { LOGIN_FAIL, LOGIN_SUCCESS } from "../types/types";
 
 const LoginOnSuccess = (data) => {
   return {
@@ -20,6 +20,10 @@ const loginAsyncAction = (email, password) => {
     try {
       let userConnected = await login(email, password);
       dispatch(LoginOnSuccess(userConnected));
+      console.log(userConnected);
+      if (userConnected.message.accessToken) {
+        localStorage.setItem("connectedUser", JSON.stringify(userConnected.message));
+      }
     } catch (e) {
       console.log(e.message);
       dispatch(LoginOnFail(e.message));

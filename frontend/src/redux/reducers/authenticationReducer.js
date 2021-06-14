@@ -5,11 +5,14 @@ import {
   LOGIN_FAIL,
 } from "../types/types";
 
+const connectedUser = JSON.parse(localStorage.getItem("connectedUser"));
+
+
 const defaultState = {
   registrationStatus: false,
   registrationMessage: "",
-  loginStatus: false,
-  loginMessage: "",
+  loginStatus: connectedUser ? true : false,
+  loginMessage: connectedUser ? connectedUser : '',
 };
 
 const authenticationReducer = (state = defaultState, action) => {
