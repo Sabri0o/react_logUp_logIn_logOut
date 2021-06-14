@@ -1,10 +1,17 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { loginAsyncAction } from "../redux/actions/login_action";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const { loginStatus, loginMessage } = useSelector((state) => state);
+  console.log(loginStatus, loginMessage);
+  const dispatch = useDispatch();
 
   const handleEmailOnChange = (e) => {
     setEmail(e.target.value);
@@ -16,12 +23,14 @@ export default function Login() {
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    dispatch(loginAsyncAction(email, password)).then(() => setLoading(false));
   };
 
   return (
     <div>
       <h3>LogIn form</h3>
-      <Form>
+      <Form onSubmit={handleOnSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control
@@ -41,9 +50,13 @@ export default function Login() {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
+        <Button variant="primary" type="submit" disabled={loading}>
+          {loading && (
+            <span className="spinner-border spinner-border-sm"></span>
+          )}
+          <span>Login</span>
         </Button>
+        {!loginStatus && <div>{loginMessage}</div>}
       </Form>
     </div>
   );

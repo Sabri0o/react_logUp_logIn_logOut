@@ -27,4 +27,4 @@ const loginAsyncAction = (email, password) => {
   };
 };
 
-module.exports = { loginAsyncAction, LoginOnFail, LoginOnSuccess };
+export { loginAsyncAction, LoginOnFail, LoginOnSuccess };
