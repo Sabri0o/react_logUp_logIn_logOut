@@ -3,16 +3,16 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT,
 } from "../types/types";
 
 const connectedUser = JSON.parse(localStorage.getItem("connectedUser"));
-
 
 const defaultState = {
   registrationStatus: false,
   registrationMessage: "",
   loginStatus: connectedUser ? true : false,
-  loginMessage: connectedUser ? connectedUser : '',
+  loginMessage: connectedUser ? connectedUser : "",
 };
 
 const authenticationReducer = (state = defaultState, action) => {
@@ -33,6 +33,12 @@ const authenticationReducer = (state = defaultState, action) => {
       };
     case LOGIN_FAIL:
       return { ...state, loginMessage: action.payload.message };
+    case LOGOUT:
+      return {
+        ...state,
+        loginStatus: false,
+        loginMessage: "",
+      };
     default:
       return state;
   }

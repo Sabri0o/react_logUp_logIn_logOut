@@ -2,13 +2,15 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Nav, Navbar } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import logOutAction from "./redux/actions/logout_action";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import Home from "./components/home";
 import Profile from "./components/profile";
 
 function App() {
+  const dispatch = useDispatch();
   const { loginMessage: connectedUserInfo } = useSelector((state) => state);
   console.log("connectedUserInfo:", connectedUserInfo);
   return (
@@ -21,6 +23,14 @@ function App() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link href="/profile">MyProfile</Nav.Link>
+              </Nav>
+              <Nav>
+                <Nav.Link
+                  href="/login"
+                  onClick={() => dispatch(logOutAction())}
+                >
+                  LogOut
+                </Nav.Link>
               </Nav>
             </Navbar.Collapse>
           ) : (
