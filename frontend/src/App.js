@@ -9,13 +9,15 @@ import Login from "./components/login";
 import Signup from "./components/signup";
 import Home from "./components/home";
 import Profile from "./components/profile";
+import UserBoard from "./components/userBoard";
+import AdminBoard from "./components/adminBoard";
+import SupervisorBoard from "./components/supervisorBoard";
 
 function App() {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showSupervisorBoard, setShowSupervisorBoard] = useState(false);
   const dispatch = useDispatch();
   const { loginMessage: connectedUserInfo } = useSelector((state) => state);
-  // console.log("roles:", connectedUserInfo.roles);
   useEffect(() => {
     if (connectedUserInfo) {
       setShowAdminBoard(connectedUserInfo.roles.includes("ROLE_ADMIN"));
@@ -70,6 +72,9 @@ function App() {
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/profile" component={Profile} />
+        <Route exact path="/userBoard" component={UserBoard} />
+        <Route exact path="/adminBoard" component={AdminBoard} />
+        <Route exact path="/supervisorBoard" component={SupervisorBoard} />
       </Switch>
     </Router>
   );
