@@ -15,7 +15,7 @@ function App() {
   const [showSupervisorBoard, setShowSupervisorBoard] = useState(false);
   const dispatch = useDispatch();
   const { loginMessage: connectedUserInfo } = useSelector((state) => state);
-  console.log("roles:", connectedUserInfo.roles);
+  // console.log("roles:", connectedUserInfo.roles);
   useEffect(() => {
     if (connectedUserInfo) {
       setShowAdminBoard(connectedUserInfo.roles.includes("ROLE_ADMIN"));
@@ -66,7 +66,7 @@ function App() {
       </div>
 
       <Switch>
-        <Route exact path="/home" component={Home}></Route>
+        <Route exact path={["/", "/home"]} component={Home}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/profile" component={Profile} />

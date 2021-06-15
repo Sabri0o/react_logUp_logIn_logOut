@@ -12,7 +12,7 @@ const defaultState = {
   registrationStatus: false,
   registrationMessage: "",
   loginStatus: connectedUser ? true : false,
-  loginMessage: connectedUser ? connectedUser : "",
+  loginMessage: connectedUser ? connectedUser : null,
 };
 
 const authenticationReducer = (state = defaultState, action) => {
@@ -37,7 +37,7 @@ const authenticationReducer = (state = defaultState, action) => {
       return {
         ...state,
         loginStatus: false,
-        loginMessage: "",
+        loginMessage: null,
       };
     default:
       return state;
