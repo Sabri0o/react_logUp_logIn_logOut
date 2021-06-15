@@ -20,7 +20,6 @@ const loginAsyncAction = (email, password) => {
     try {
       let userConnected = await login(email, password);
       dispatch(LoginOnSuccess(userConnected));
-      console.log(userConnected);
       if (userConnected.message.accessToken) {
         localStorage.setItem("connectedUser", JSON.stringify(userConnected.message));
       }

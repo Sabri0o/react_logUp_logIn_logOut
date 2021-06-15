@@ -39,7 +39,6 @@ export default function Login() {
     }
   };
 
-  console.log(loginStatus, loginMessage);
   if (loginStatus) {
     return <Redirect to="/profile" />;
   }
