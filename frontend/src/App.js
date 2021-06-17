@@ -22,7 +22,11 @@ function App() {
   const dispatch = useDispatch();
   const { loginMessage: connectedUserInfo } = useSelector((state) => state);
   useEffect(() => {
-    if (connectedUserInfo) {
+    if (
+      connectedUserInfo !== null &&
+      connectedUserInfo.hasOwnProperty("roles")
+    ) {
+      console.log(typeof connectedUserInfo);
       setAdmin(connectedUserInfo.roles.includes("ROLE_ADMIN"));
       setSupervisor(
         connectedUserInfo.roles.includes("ROLE_SUPERVISOR") &&

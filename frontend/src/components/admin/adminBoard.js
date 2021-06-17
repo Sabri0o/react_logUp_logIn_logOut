@@ -16,7 +16,7 @@ export default function AdminBoard() {
   });
   return (
     <div>
-     <h2>welcome to the supervisor Board</h2>
+     <h2>welcome to the admin Board</h2>
       <h4>{content}</h4>
     </div>
   );
