@@ -4,15 +4,17 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
 } from "../types/types";
 
 const connectedUser = JSON.parse(localStorage.getItem("connectedUser"));
-
 const defaultState = {
   registrationStatus: false,
   registrationMessage: "",
   loginStatus: connectedUser ? true : false,
   loginMessage: connectedUser ? connectedUser : null,
+  updateProfileStatus: false,
 };
 
 const authenticationReducer = (state = defaultState, action) => {
@@ -33,9 +35,22 @@ const authenticationReducer = (state = defaultState, action) => {
       };
     case LOGIN_FAIL:
       return { ...state, loginMessage: action.payload.message };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        updateProfileStatus: action.payload.status,
+        loginMessage: action.payload.message,
+      };
+    case UPDATE_PROFILE_FAIL:
+      return {
+        ...state,
+        updateProfileStatus: false,
+        updateProfileMessage: action.payload,
+      };
     case LOGOUT:
       return {
         ...state,
+        updateProfileStatus: false,
         loginStatus: false,
         loginMessage: null,
       };

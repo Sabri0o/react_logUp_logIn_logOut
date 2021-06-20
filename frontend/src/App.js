@@ -15,6 +15,7 @@ import ShowAllSupervisors from "./components/admin/showAllSupervisors";
 import ShowAllUsersForAdmin from "./components/admin/showAllUsersForAdmin";
 import ShowAllUsersForSupervisor from "./components/supervisor/showAllUsersForSupervisor";
 import SupervisorBoard from "./components/supervisor/supervisorBoard";
+import UpdateFrofile from "./components/updateProfile";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -26,7 +27,6 @@ function App() {
       connectedUserInfo !== null &&
       connectedUserInfo.hasOwnProperty("roles")
     ) {
-      console.log(typeof connectedUserInfo);
       setAdmin(connectedUserInfo.roles.includes("ROLE_ADMIN"));
       setSupervisor(
         connectedUserInfo.roles.includes("ROLE_SUPERVISOR") &&
@@ -75,7 +75,7 @@ function App() {
                       Show all users
                     </NavDropdown.Item>
                   )}
-                  <NavDropdown.Item href="/login">
+                  <NavDropdown.Item href="/updateProfile">
                     Update profile
                   </NavDropdown.Item>
                   <NavDropdown.Item
@@ -126,6 +126,7 @@ function App() {
         />
 
         <Route exact path="/supervisorBoard" component={SupervisorBoard} />
+        <Route exact path="/updateProfile" component={UpdateFrofile} />
       </Switch>
     </Router>
   );
