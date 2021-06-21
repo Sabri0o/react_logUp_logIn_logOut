@@ -16,6 +16,7 @@ import ShowAllUsersForAdmin from "./components/admin/showAllUsersForAdmin";
 import ShowAllUsersForSupervisor from "./components/supervisor/showAllUsersForSupervisor";
 import SupervisorBoard from "./components/supervisor/supervisorBoard";
 import UpdateFrofile from "./components/updateProfile";
+import ShowAllRolesForAdmin from "./components/admin/showAllRoles";
 
 function App() {
   const [admin, setAdmin] = useState(false);
@@ -67,6 +68,11 @@ function App() {
                   {admin && (
                     <NavDropdown.Item href="/showAllSupervisors">
                       Show all supervisors
+                    </NavDropdown.Item>
+                  )}
+                  {admin && (
+                    <NavDropdown.Item href="/showAllRoles">
+                      Show all Roles
                     </NavDropdown.Item>
                   )}
 
@@ -127,6 +133,7 @@ function App() {
 
         <Route exact path="/supervisorBoard" component={SupervisorBoard} />
         <Route exact path="/updateProfile" component={UpdateFrofile} />
+        <Route exact path="/showAllRoles" component={ShowAllRolesForAdmin} />
       </Switch>
     </Router>
   );

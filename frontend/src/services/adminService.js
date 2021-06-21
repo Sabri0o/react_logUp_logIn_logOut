@@ -47,10 +47,19 @@ const removeSupervisor = (email) => {
   });
 };
 
+const getAllRoles = () => {
+  return $.ajax({
+    method: "GET",
+    url: API_URL + "getAllRoles",
+    headers: { "x-access-token": userInfo.accessToken },
+  });
+};
+
 export {
   showAdminContent,
   getAllUsers,
   getAllSupervisors,
   addSupervisor,
   removeSupervisor,
+  getAllRoles
 };
