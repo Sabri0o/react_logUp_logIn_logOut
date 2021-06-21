@@ -11,6 +11,10 @@ export default function UpdateFrofile() {
   const [loading, setLoading] = useState(false);
   const _isMounted = useRef(true);
 
+  const { updateProfileStatus, updateProfileMessage } = useSelector(
+    (state) => state
+  );
+  const dispatch = useDispatch();
   const handleEmailOnChange = (e) => {
     setEmail(e.target.value);
   };
@@ -29,16 +33,11 @@ export default function UpdateFrofile() {
     };
   });
 
-  const { updateProfileStatus, updateProfileMessage } = useSelector(
-    (state) => state
-  );
-  const dispatch = useDispatch();
-
   if (updateProfileStatus) {
     return <Redirect to="/profile" />;
   }
 
-  console.log(updateProfileStatus, updateProfileMessage)
+  console.log(updateProfileStatus, updateProfileMessage);
 
   return (
     <div>

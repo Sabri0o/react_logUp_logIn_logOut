@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 
 export default function Profile() {
   const { updateProfileStatus, loginMessage } = useSelector((state) => state);
-
+  console.log(updateProfileStatus, loginMessage);
   return (
     <div>
       {updateProfileStatus && <p>Your profile has been updated successfully</p>}
