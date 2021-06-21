@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect, useMemo } from "react";
-// import { Card } from "react-bootstrap";
 import { getAllRoles } from "../../services/adminService";
 import { useTable } from "react-table";
+import { Button } from "react-bootstrap";
 
 export default function ShowAllRolesForAdmin() {
   const [allRoles, setAllRoles] = useState([]);
@@ -27,6 +27,28 @@ export default function ShowAllRolesForAdmin() {
       {
         Header: "Roles",
         accessor: "roles",
+        Cell: (props) => {
+          return props.value.includes("ROLE_SUPERVISOR")
+            ? "Supervisor"
+            : "User";
+        },
+      },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        Cell: (props) => {
+          console.log(props.row.values.roles);
+          const rowRoles = props.row.values.roles;
+          return (
+            <div>
+              {rowRoles.includes("ROLE_SUPERVISOR") ? (
+                <Button>Remove Role Supervisor</Button>
+              ) : (
+                <Button>Add Role Supervisor</Button>
+              )}
+            </div>
+          );
+        },
       },
     ],
     []
