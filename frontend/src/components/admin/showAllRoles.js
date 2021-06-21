@@ -1,11 +1,13 @@
 import React from "react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { getAllRoles } from "../../services/adminService";
 import { useTable } from "react-table";
 import { Button } from "react-bootstrap";
 
 export default function ShowAllRolesForAdmin() {
   const [allRoles, setAllRoles] = useState([]);
+  const dataRef = useRef();
+  dataRef.current = allRoles;
 
   useEffect(() => {
     getAllRoles()
@@ -17,6 +19,11 @@ export default function ShowAllRolesForAdmin() {
         console.log(err.message);
       });
   }, []);
+
+  const handleOnClick = (rowId) => {
+    console.log(rowId);
+    console.log(dataRef.current[rowId].email);
+  };
 
   const columns = useMemo(
     () => [
@@ -37,14 +44,17 @@ export default function ShowAllRolesForAdmin() {
         Header: "Actions",
         accessor: "actions",
         Cell: (props) => {
-          console.log(props.row.values.roles);
-          const rowRoles = props.row.values.roles;
+          console.log(props.row.id);
+          const rowId = props.row.id;
+          const rowRoles = dataRef.current[rowId].roles;
+          //   console.log(props.row.values.roles);
+          //   const rowRoles = props.row.values.roles;
           return (
             <div>
               {rowRoles.includes("ROLE_SUPERVISOR") ? (
-                <Button>Remove Role Supervisor</Button>
+                <Button onClick={()=>handleOnClick(rowId)}>Remove Role Supervisor</Button>
               ) : (
-                <Button>Add Role Supervisor</Button>
+                <Button onClick={()=>handleOnClick(rowId)}>Add Role Supervisor</Button>
               )}
             </div>
           );
