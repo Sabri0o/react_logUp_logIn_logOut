@@ -1,28 +1,52 @@
 import React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { getAllRoles } from "../../services/adminService";
+// import { useDispatch } from "react-redux";
 import { useTable } from "react-table";
 import { Button } from "react-bootstrap";
+import {
+  getAllRoles,
+  addSupervisor,
+  removeSupervisor,
+} from "../../services/adminService";
 
 export default function ShowAllRolesForAdmin() {
+  //   const dispatch = useDispatch();
   const [allRoles, setAllRoles] = useState([]);
+  const [clicked, setClicked] = useState(true);
+  // const [loading, setLoading] = useState(false);
+
   const dataRef = useRef();
   dataRef.current = allRoles;
 
   useEffect(() => {
+    console.log("Run useEffect");
     getAllRoles()
       .then((response) => {
-        console.log(response);
         setAllRoles(response);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [clicked]);
 
-  const handleOnClick = (rowId) => {
-    console.log(rowId);
-    console.log(dataRef.current[rowId].email);
+  const addSupervisorOnClick = (rowId) => {
+    // console.log(rowId);
+    // console.log(dataRef.current[rowId].email);
+    // setLoading(true);
+    addSupervisor(dataRef.current[rowId].email).then(() => {
+      setClicked(!clicked);
+      console.log(rowId);
+    });
+  };
+
+  const removeSupervisorOnClick = (rowId) => {
+    // console.log(rowId);
+    // console.log(dataRef.current[rowId].email);
+    // setLoading(true);
+    removeSupervisor(dataRef.current[rowId].email).then(() => {
+      setClicked(!clicked);
+      console.log(rowId);
+    });
   };
 
   const columns = useMemo(
@@ -44,7 +68,7 @@ export default function ShowAllRolesForAdmin() {
         Header: "Actions",
         accessor: "actions",
         Cell: (props) => {
-          console.log(props.row.id);
+          //   console.log(props.row.id);
           const rowId = props.row.id;
           const rowRoles = dataRef.current[rowId].roles;
           //   console.log(props.row.values.roles);
@@ -52,16 +76,32 @@ export default function ShowAllRolesForAdmin() {
           return (
             <div>
               {rowRoles.includes("ROLE_SUPERVISOR") ? (
-                <Button onClick={()=>handleOnClick(rowId)}>Remove Role Supervisor</Button>
+                <Button
+                  onClick={() => removeSupervisorOnClick(rowId)}
+                  // disabled={loading}
+                >
+                  {/* {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )} */}
+                  <span>Remove Role Supervisor</span>
+                </Button>
               ) : (
-                <Button onClick={()=>handleOnClick(rowId)}>Add Role Supervisor</Button>
+                <Button
+                  onClick={() => addSupervisorOnClick(rowId)}
+                  // disabled={loading}
+                >
+                  {/* {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )} */}
+                  <span>Add Role Supervisor</span>
+                </Button>
               )}
             </div>
           );
         },
       },
     ],
-    []
+    [clicked]
   );
 
   const data = React.useMemo(() => allRoles, [allRoles]);

@@ -5,8 +5,10 @@ import { getAllUsers, addSupervisor } from "../../services/adminService";
 
 export default function ShowAllUsersForAdmin() {
   const [allUsers, setAllUsers] = useState([]);
+  const [clicked, setclicked] = useState(false);
 
   useEffect(() => {
+    console.log("Run useEffect");
     getAllUsers()
       .then((response) => {
         setAllUsers(response);
@@ -14,7 +16,13 @@ export default function ShowAllUsersForAdmin() {
       .catch((err) => {
         console.log(err.message);
       });
-  });
+  }, [clicked]);
+
+  const addSupervisorOnClick = (email) => {
+    addSupervisor(email).then(() => {
+      setclicked(!clicked);
+    });
+  };
 
   return (
     <div>
@@ -35,7 +43,7 @@ export default function ShowAllUsersForAdmin() {
                     additional content.
                   </Card.Text>
                   <Button
-                    onClick={() => addSupervisor(user.email)}
+                    onClick={() => addSupervisorOnClick(user.email)}
                     variant="primary"
                   >
                     Add Supervisor

@@ -8,8 +8,10 @@ import {
 
 export default function ShowAllSupervisors() {
   const [allSupervisors, setAllSupervisors] = useState([]);
+  const [clicked, setclicked] = useState(false);
 
   useEffect(() => {
+    console.log("Run useEffect");
     getAllSupervisors()
       .then((response) => {
         setAllSupervisors(response);
@@ -17,7 +19,13 @@ export default function ShowAllSupervisors() {
       .catch((err) => {
         console.log(err.message);
       });
-  });
+  }, [clicked]);
+
+  const removeSupervisorOnClick = (email) => {
+    removeSupervisor(email).then(() => {
+      setclicked(!clicked);
+    });
+  };
 
   return (
     <div>
@@ -37,7 +45,7 @@ export default function ShowAllSupervisors() {
                     additional content.
                   </Card.Text>
                   <Button
-                    onClick={() => removeSupervisor(supervisor.email)}
+                    onClick={() => removeSupervisorOnClick(supervisor.email)}
                     variant="primary"
                   >
                     Remove Supervisor
