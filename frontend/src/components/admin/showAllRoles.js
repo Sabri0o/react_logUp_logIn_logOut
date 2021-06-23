@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useTable } from "react-table";
+import { useTable, useFilters } from "react-table";
+import ColumnFilter from "./columnFilter";
 import { Button } from "react-bootstrap";
 import {
   getAllRoles,
@@ -49,6 +50,7 @@ export default function ShowAllRolesForAdmin() {
       {
         Header: "Email",
         accessor: "email",
+        Filter: ColumnFilter,
       },
       {
         Header: "Roles",
@@ -58,6 +60,7 @@ export default function ShowAllRolesForAdmin() {
             ? "Supervisor"
             : "User";
         },
+        disableFilters: true,
       },
       {
         Header: "Change Role",
@@ -88,6 +91,7 @@ export default function ShowAllRolesForAdmin() {
             </div>
           );
         },
+        disableFilters: true,
       },
     ],
     [clicked, loading]
@@ -101,10 +105,13 @@ export default function ShowAllRolesForAdmin() {
     headerGroups, // Returns normalized header groups
     rows, // rows for the table based on the data passed
     prepareRow, // Prepare the row in order to be displayed.
-  } = useTable({
-    columns: columns,
-    data: data,
-  });
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useFilters
+  );
 
   return (
     <div>
@@ -124,6 +131,9 @@ export default function ShowAllRolesForAdmin() {
                   {headerGroup.headers.map((column) => (
                     <th {...column.getHeaderProps()}>
                       {column.render("Header")}
+                      <div>
+                        {column.canFilter ? column.render("Filter") : null}
+                      </div>
                     </th>
                   ))}
                 </tr>
