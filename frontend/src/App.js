@@ -16,7 +16,7 @@ import ShowAllUsersForAdmin from "./components/admin/showAllUsersForAdmin";
 import ShowAllUsersForSupervisor from "./components/supervisor/showAllUsersForSupervisor";
 import SupervisorBoard from "./components/supervisor/supervisorBoard";
 import UpdateFrofile from "./components/updateProfile";
-import ShowAllRolesForAdmin from "./components/admin/showAllRoles";
+import ShowAllRolesForAdmin from "./components/admin/showAllRoles/showAllRoles";
 
 function App() {
   const [admin, setAdmin] = useState(false);

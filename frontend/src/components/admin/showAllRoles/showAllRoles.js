@@ -2,12 +2,13 @@ import React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useTable, useFilters } from "react-table";
 import ColumnFilter from "./columnFilter";
+import SelectColumnFilter from "./selectColumnFilter";
 import { Button } from "react-bootstrap";
 import {
   getAllRoles,
   addSupervisor,
   removeSupervisor,
-} from "../../services/adminService";
+} from "../../../services/adminService";
 
 export default function ShowAllRolesForAdmin() {
   const [allRoles, setAllRoles] = useState([]);
@@ -60,7 +61,7 @@ export default function ShowAllRolesForAdmin() {
             ? "Supervisor"
             : "User";
         },
-        disableFilters: true,
+        Filter: SelectColumnFilter,
       },
       {
         Header: "Change Role",
