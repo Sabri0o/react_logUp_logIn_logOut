@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useTable, useFilters } from "react-table";
+import { useTable, useFilters, usePagination } from "react-table";
 import ColumnFilter from "./columnFilter";
 import SelectColumnFilter from "./selectColumnFilter";
 import { Button } from "react-bootstrap";
@@ -104,14 +104,21 @@ export default function ShowAllRolesForAdmin() {
     getTableProps, // Sends the needed props to your table.
     getTableBodyProps, // Sends needed props to your table body
     headerGroups, // Returns normalized header groups
-    rows, // rows for the table based on the data passed
+    // rows, // rows for the table based on the data passed
     prepareRow, // Prepare the row in order to be displayed.
+    page, // fetch the current page
+    nextPage,
+    previousPage,
+    canNextPage,
+    canPreviousPage,
   } = useTable(
     {
       columns,
       data,
+      initialState: { pageSize: 5 },
     },
-    useFilters
+    useFilters,
+    usePagination
   );
 
   return (
@@ -141,7 +148,7 @@ export default function ShowAllRolesForAdmin() {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
+              {page.map((row, i) => {
                 prepareRow(row);
                 return (
                   <tr {...row.getRowProps()}>
@@ -155,6 +162,12 @@ export default function ShowAllRolesForAdmin() {
               })}
             </tbody>
           </table>
+          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            Previous page{" "}
+          </Button>
+          <Button onClick={() => nextPage()} disabled={!canNextPage}>
+            Next page{" "}
+          </Button>
         </div>
       )}
     </div>
